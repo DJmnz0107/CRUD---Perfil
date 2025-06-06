@@ -1,0 +1,39 @@
+.select-container {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+  }
+  
+  .select-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .select-input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+    transition: border-color 0.2s ease-in-out;
+  }
+  
+  .select-input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .select-error {
+    border-color: #e74c3c;
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    font-size: 13px;
+    margin-top: 5px;
+  }
+  
