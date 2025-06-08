@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import { url } from "../../utils/apiUrl"; // URL de la API
 import { toast } from "react-hot-toast";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useFetchPets from "./useFetchPets";
 
-const useDataPet = (methods) => {
+const useDataPet = (methods, isEditing = false, petData = null) => {
   const { getPetById, getPets } = useFetchPets();
-  const { id } = useParams();
 
   const {
     register,
@@ -49,7 +48,7 @@ const useDataPet = (methods) => {
   // y envía una solicitud PUT a la API para actualizar los datos de la mascota
   const editPet = async (dataForm) => {
     try {
-      const response = await fetch(`${url}/${id}`, {
+      const response = await fetch(`${url}/${petData.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -73,10 +72,9 @@ const useDataPet = (methods) => {
 
   // Esta función se llama cuando se envía el formulario
   // y decide si guardar una nueva mascota o editar una existente
-  // dependiendo de si hay un id presente en los parámetros de la URL
-  // Si hay un id, se llama a editPet, de lo contrario se llama a savePetForm
+  // dependiendo de si estamos en modo edición
   const handlePetAction = (dataForm) => {
-    if (id) {
+    if (isEditing && petData) {
       editPet(dataForm);
     } else {
       savePetForm(dataForm);
@@ -86,32 +84,36 @@ const useDataPet = (methods) => {
   // Función para manejar la actualización de una mascota
   // Esta función se llama cuando se hace clic en el botón de editar
   // y redirige al usuario a la página de edición de la mascota
-  // pasando el id de la mascota como parámetro en la URL
-  const handleUpdatePet = (id) => {
-    navigate(`/pets/${id}`);
+  // pasando los datos de la mascota como state
+  const handleUpdatePet = (petId) => {
+    navigate('/pets', { 
+      state: { 
+        isEditing: true, 
+        petData: { id: petId } // Aquí podrías pasar más datos si los tienes
+      } 
+    });
   };
 
-  // Cargar los datos de la mascota por id
-  // Esta función se llama para obtener los datos de la mascota cuando el componente se monta o cuando cambia el id
+  // Cargar los datos de la mascota
+  // Esta función se llama para pre-llenar el formulario cuando estamos en modo edición
   const loadPet = async () => {
-    if (id) {
-      const pet = await getPetById(id);
-      if (pet) {
-        reset({
-          mascota: pet?.mascota,
-          edad: pet?.edad,
-          raza: pet?.raza,
-          especie: pet?.especie,
-          propietario: pet?.propietario,
-        });
-      }
+    if (isEditing && petData) {
+      // Si ya tenemos los datos de la mascota, los usamos directamente
+      reset({
+        mascota: petData?.mascota || '',
+        edad: petData?.edad || '',
+        raza: petData?.raza || '',
+        especie: petData?.especie || '',
+        propietario: petData?.propietario || '',
+        descripcion: petData?.descripcion || ''
+      });
     }
   };
 
-  // useEffect para cargar los datos de la mascota cuando el componente se monta o cuando cambia el id
+  // useEffect para cargar los datos de la mascota cuando el componente se monta
   useEffect(() => {
     loadPet();
-  }, [id]); // Dependencia en id para recargar los datos si cambia
+  }, [isEditing, petData]); // Dependencia en isEditing y petData
 
   return {
     register,

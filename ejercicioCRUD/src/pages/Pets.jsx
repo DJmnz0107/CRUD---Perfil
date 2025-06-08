@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Titulo from "../components/Titulos";
 import InputText from "../components/InputText";
 import SelectInput from "../components/SelectInput";
@@ -9,6 +10,10 @@ import { optionSelect } from "../utils/apiUrl";
 import '../css/pets.css';
 
 const Pets = () => {
+  // Obtener datos de navegación
+  const location = useLocation();
+  const { isEditing, petData } = location.state || {};
+
   // Creando métodos para manejar el formulario
   const methods = useForm();
   
@@ -17,7 +22,22 @@ const Pets = () => {
     register,
     handleSubmit,
     errors
-  } = useDataPets(methods);
+  } = useDataPets(methods, isEditing, petData);
+
+  // Pre-llenar el formulario si estamos editando
+  useEffect(() => {
+    if (isEditing && petData) {
+      // Resetear el formulario con los datos de la mascota
+      methods.reset({
+        mascota: petData.mascota || '',
+        edad: petData.edad || '',
+        raza: petData.raza || '',
+        especie: petData.especie || '',
+        propietario: petData.propietario || '',
+        descripcion: petData.descripcion || ''
+      });
+    }
+  }, [isEditing, petData, methods]);
 
   // Opciones para el select de especies
   const especieOptions = [
@@ -43,9 +63,12 @@ const Pets = () => {
         className="pets-form"
       >
         <div className="form-header">
-          <Titulo titulo="Información de Mascota" />
+          <Titulo titulo={isEditing ? "Editar Mascota" : "Información de Mascota"} />
           <p className="form-description">
-            Ingresa los datos de la mascota para registrarla en el sistema.
+            {isEditing 
+              ? "Modifica los datos de la mascota." 
+              : "Ingresa los datos de la mascota para registrarla en el sistema."
+            }
           </p>
         </div>
 
@@ -116,8 +139,8 @@ const Pets = () => {
 
         <div className="form-actions">
           <Button 
-            type="submit" 
-            text="💾 Guardar Mascota"
+            type="submit"
+            text={isEditing ? "💾 Actualizar Mascota" : "💾 Guardar Mascota"}
             variant="primary"
             size="large"
           />

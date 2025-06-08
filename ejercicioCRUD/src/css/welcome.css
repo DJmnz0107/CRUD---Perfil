@@ -1,28 +1,280 @@
+/* welcome.css - Minimal Beautiful Design */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-    font-family: 'Nunito', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fafafa;
+  color: #1a1a1a;
+}
+
+.welcome-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  position: relative;
+}
+
+/* Sutil elemento decorativo */
+.welcome-container::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: 15%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.02) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.1); opacity: 0.1; }
+}
+
+.welcome-box {
+  background: white;
+  padding: 3rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 20px 25px -5px rgba(0, 0, 0, 0.04);
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.welcome-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.05),
+    0 25px 50px -12px rgba(0, 0, 0, 0.08);
+}
+
+/* Icono decorativo minimalista */
+.welcome-icon {
+  width: 60px;
+  height: 60px;
+  background: #000;
+  border-radius: 12px;
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+.welcome-icon::after {
+  content: '✨';
+  font-size: 24px;
+  color: white;
+}
+
+.welcome-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.welcome-message {
+  color: #6b7280;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.welcome-message strong {
+  color: #374151;
+  font-weight: 500;
+}
+
+/* Botón minimalista pero elegante */
+.welcome-button,
+.welcome-box button {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 160px;
+  justify-content: center;
+  font-family: inherit;
+}
+
+.welcome-button:hover,
+.welcome-box button:hover {
+  background: #1f2937;
+  transform: translateY(-1px);
+}
+
+.welcome-button:active,
+.welcome-box button:active {
+  transform: translateY(0);
+}
+
+/* Indicadores CRUD minimalistas */
+.crud-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.crud-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.crud-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+.crud-dot.create { background: #10b981; animation-delay: 0s; }
+.crud-dot.read { background: #3b82f6; animation-delay: 0.5s; }
+.crud-dot.update { background: #f59e0b; animation-delay: 1s; }
+.crud-dot.delete { background: #ef4444; animation-delay: 1.5s; }
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .welcome-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #f3f4f6;
+    padding: 1.5rem;
   }
   
   .welcome-box {
-    background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem 2rem;
     max-width: 400px;
-    width: 100%;
-    text-align: center;
+  }
+  
+  .welcome-title {
+    font-size: 1.5rem;
   }
   
   .welcome-message {
-    color: #4a4a4a;
-    font-size: 16px;
+    font-size: 0.95rem;
+  }
+  
+  .crud-indicators {
+    gap: 1rem;
+  }
+  
+  .crud-indicator {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-container {
+    padding: 1rem;
+  }
+  
+  .welcome-box {
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
+  }
+  
+  .welcome-icon {
+    width: 50px;
+    height: 50px;
     margin-bottom: 1.5rem;
   }
   
+  .welcome-icon::after {
+    font-size: 20px;
+  }
+  
+  .welcome-title {
+    font-size: 1.3rem;
+  }
+  
+  .welcome-message {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .welcome-button,
+  .welcome-box button {
+    padding: 0.875rem 2rem;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+  
+  .crud-indicators {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+}
+
+/* Animación de entrada suave */
+.welcome-container {
+  animation: containerFadeIn 1s ease-out;
+}
+
+@keyframes containerFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

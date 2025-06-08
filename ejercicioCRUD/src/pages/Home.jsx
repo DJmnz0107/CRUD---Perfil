@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import useFetchPets from "../hooks/pets/useFetchPets";
 import { optionSelect } from "../utils/apiUrl";
@@ -7,7 +7,23 @@ import '../css/home.css';
 
 const Home = () => {
   const { pets, getPets } = useFetchPets();
-  const { deletePet, handleUpdatePet } = usePetsActions(getPets);
+  const { deletePet } = usePetsActions(getPets);
+  const navigate = useNavigate();
+
+  const handleUpdatePet = (petId) => {
+    // Encuentra los datos de la mascota
+    const petToEdit = pets.find(pet => pet.id === petId);
+    
+    if (petToEdit) {
+      // Navega a la página de edición pasando los datos como state
+      navigate('/pets', { 
+        state: { 
+          isEditing: true, 
+          petData: petToEdit 
+        } 
+      });
+    }
+  };
 
   return (
     <div className="home-container">
@@ -41,14 +57,14 @@ const Home = () => {
         {/* Stats Cards */}
         <div className="stats-container">
           <div className="stat-card">
-            <div className="stat-icon">🐕</div>
+            <div className="stat-icon">🏥</div>
             <div className="stat-info">
               <h3>{pets?.length || 0}</h3>
               <p>Total Mascotas</p>
             </div>
           </div>
           <div className="stat-card">
-            <div className="stat-icon">🏥</div>
+            <div className="stat-icon">🐕</div>
             <div className="stat-info">
               <h3>{pets?.filter(pet => pet.especie === 'perro').length || 0}</h3>
               <p>Perros</p>
