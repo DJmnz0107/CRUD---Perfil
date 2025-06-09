@@ -33,8 +33,7 @@ const Pets = () => {
         edad: petData.edad || '',
         raza: petData.raza || '',
         especie: petData.especie || '',
-        propietario: petData.propietario || '',
-        descripcion: petData.descripcion || ''
+        propietario: petData.propietario || ''
       });
     }
   }, [isEditing, petData, methods]);
@@ -121,20 +120,6 @@ const Pets = () => {
             register={register}
             errors={errors}
           />
-
-          {/* Descripción adicional */}
-          <div className="form-group full-width">
-            <label className="form-label">Descripción Adicional</label>
-            <textarea
-              {...register("descripcion")}
-              className="form-textarea"
-              placeholder="Información adicional sobre la mascota (opcional)"
-              rows="4"
-            ></textarea>
-            {errors.descripcion && (
-              <span className="error-message">{errors.descripcion.message}</span>
-            )}
-          </div>
         </div>
 
         <div className="form-actions">
