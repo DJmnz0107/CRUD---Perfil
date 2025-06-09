@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Welcome from "./pages/Welcome";
-import Pets from "./pages/Pets"
+import Pets from "./pages/Pets";
 import Home from "./pages/Home";
 import { Toaster } from "react-hot-toast";
 
@@ -15,6 +15,7 @@ function App() {
           <Route path="/home" element={<Home />} />
         </Routes>
       </Router>
+      <Toaster position="top-right" reverseOrder={false} />
     </>
   );
 }
